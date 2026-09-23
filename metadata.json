@@ -1,0 +1,6 @@
+{
+  "name": "ТОВ «Рекрієйт» — Каталог програмних продуктів",
+  "description": "Офіційний портал програмних продуктів власної розробки ТОВ «Рекрієйт». Версії програм, GitHub репозиторії, інтерактивні демо та оплата доступу через WayForPay.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
