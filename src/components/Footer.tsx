@@ -21,10 +21,10 @@ export const Footer: React.FC<FooterProps> = ({ lang, company, onOpenLegal }) =>
   const t = translations[lang];
 
   return (
-    <footer id="contacts" className="border-t border-slate-200 bg-slate-50 text-slate-600 text-xs">
+    <footer id="contacts" className="border-t border-slate-200 bg-slate-50 text-slate-600 text-xs w-full max-w-full overflow-hidden">
       {/* Top Company Info Block */}
-      <div id="company-info" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div id="company-info" className="mx-auto max-w-7xl px-3.5 sm:px-6 lg:px-8 py-10 sm:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-10 sm:mb-12">
           {/* Col 1: About TOV Recreate */}
           <div className="space-y-3">
             <div className="flex items-center gap-2 text-slate-900">

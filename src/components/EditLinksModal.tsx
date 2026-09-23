@@ -54,26 +54,26 @@ export const EditLinksModal: React.FC<EditLinksModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/60 backdrop-blur-sm">
-      <div className="relative w-full max-w-2xl rounded-3xl border border-slate-200 bg-white shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-sm">
+      <div className="relative w-full max-w-2xl rounded-2xl sm:rounded-3xl border border-slate-200 bg-white shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 bg-slate-50/80">
+        <div className="flex items-center justify-between border-b border-slate-200 px-4 sm:px-6 py-3.5 sm:py-4 bg-slate-50/80 shrink-0">
           <div>
-            <h3 className="text-lg font-bold text-slate-900 font-['Space_Grotesk']">
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 font-['Space_Grotesk'] leading-tight">
               {t.editLinksModal.title}
             </h3>
-            <p className="text-xs text-slate-500 font-medium">{t.editLinksModal.subtitle}</p>
+            <p className="text-[11px] sm:text-xs text-slate-500 font-medium">{t.editLinksModal.subtitle}</p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors"
+            className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-5 overflow-y-auto flex-grow bg-slate-50/50">
+        <div className="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto flex-grow bg-slate-50/50">
           {draftProducts.map((p) => (
             <div key={p.id} className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3 shadow-xs">
               <div className="flex items-center justify-between">

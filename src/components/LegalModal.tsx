@@ -24,36 +24,36 @@ export const LegalModal: React.FC<LegalModalProps> = ({
   const [activeTab, setActiveTab] = useState<'offer' | 'privacy' | 'refund'>(initialTab);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/60 backdrop-blur-sm">
-      <div className="relative w-full max-w-3xl rounded-3xl border border-slate-200 bg-white shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-sm">
+      <div className="relative w-full max-w-3xl rounded-2xl sm:rounded-3xl border border-slate-200 bg-white shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 bg-slate-50/80">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-xs">
+        <div className="flex items-center justify-between border-b border-slate-200 px-4 sm:px-6 py-3.5 sm:py-4 bg-slate-50/80 shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-xs shrink-0">
               <Shield className="h-5 w-5" />
             </div>
-            <div>
-              <h3 className="text-base font-bold text-slate-900 font-['Space_Grotesk']">
+            <div className="min-w-0">
+              <h3 className="text-base font-bold text-slate-900 font-['Space_Grotesk'] truncate">
                 {t.legal.companyTitle}
               </h3>
-              <p className="text-xs text-slate-500 font-medium">
+              <p className="text-[11px] sm:text-xs text-slate-500 font-medium truncate">
                 {lang === 'uk' ? company.legalNameUk : company.legalNameEn} • {lang === 'uk' ? 'ЄДРПОУ' : 'USREOU'} {company.edrpou}
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors"
+            className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors shrink-0"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-slate-200 bg-slate-50 px-6 text-xs font-bold">
+        <div className="flex border-b border-slate-200 bg-slate-50 px-3 sm:px-6 text-xs font-bold overflow-x-auto shrink-0">
           <button
             onClick={() => setActiveTab('offer')}
-            className={`py-3 px-4 border-b-2 transition-colors ${
+            className={`py-3 px-3 sm:px-4 border-b-2 whitespace-nowrap transition-colors ${
               activeTab === 'offer'
                 ? 'border-blue-600 text-blue-700'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
@@ -63,7 +63,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
           </button>
           <button
             onClick={() => setActiveTab('privacy')}
-            className={`py-3 px-4 border-b-2 transition-colors ${
+            className={`py-3 px-3 sm:px-4 border-b-2 whitespace-nowrap transition-colors ${
               activeTab === 'privacy'
                 ? 'border-blue-600 text-blue-700'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
@@ -73,7 +73,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
           </button>
           <button
             onClick={() => setActiveTab('refund')}
-            className={`py-3 px-4 border-b-2 transition-colors ${
+            className={`py-3 px-3 sm:px-4 border-b-2 whitespace-nowrap transition-colors ${
               activeTab === 'refund'
                 ? 'border-blue-600 text-blue-700'
                 : 'border-transparent text-slate-500 hover:text-slate-800'

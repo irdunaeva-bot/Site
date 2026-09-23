@@ -154,7 +154,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 font-['Plus_Jakarta_Sans',sans-serif]">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden flex flex-col bg-slate-50 text-slate-800 font-['Plus_Jakarta_Sans',sans-serif]">
       {/* Active License notification banner */}
       <ActiveAccessBanner
         licenses={activeLicenses}
@@ -172,7 +172,7 @@ export default function App() {
       />
 
       {/* Main Content */}
-      <main className="flex-grow">
+      <main className="flex-grow w-full max-w-full overflow-x-hidden">
         {/* Murka Style Hero Section */}
         <HeroSection
           lang={lang}

@@ -209,31 +209,31 @@ export const WayForPayModal: React.FC<WayForPayModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-slate-900/60 backdrop-blur-sm">
-      <div className="relative w-full max-w-xl rounded-3xl border border-slate-200 bg-white shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-slate-900/60 backdrop-blur-sm">
+      <div className="relative w-full max-w-xl rounded-2xl sm:rounded-3xl border border-slate-200 bg-white shadow-2xl overflow-hidden my-auto max-h-[95vh] flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 bg-slate-50/80">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-xs">
-              <CreditCard className="h-5 w-5" />
+        <div className="flex items-center justify-between border-b border-slate-200 px-4 sm:px-6 py-3.5 sm:py-4 bg-slate-50/80 shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl sm:rounded-2xl bg-blue-600 text-white shadow-xs shrink-0">
+              <CreditCard className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-slate-900 font-['Space_Grotesk']">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 font-['Space_Grotesk'] leading-tight">
                 {t.checkoutModal.title}
               </h3>
-              <p className="text-xs text-slate-500 font-medium">{t.checkoutModal.companySub}</p>
+              <p className="text-[11px] sm:text-xs text-slate-500 font-medium">{t.checkoutModal.companySub}</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors"
+            className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-5">
+        <div className="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto">
           {/* If payment is completed successfully */}
           {completedLicense ? (
             <div className="space-y-5 text-center py-4">

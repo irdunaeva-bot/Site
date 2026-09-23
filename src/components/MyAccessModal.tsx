@@ -63,19 +63,19 @@ export const MyAccessModal: React.FC<MyAccessModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/60 backdrop-blur-sm">
-      <div className="relative w-full max-w-2xl rounded-3xl border border-slate-200 bg-white shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-sm">
+      <div className="relative w-full max-w-2xl rounded-2xl sm:rounded-3xl border border-slate-200 bg-white shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 bg-slate-50/80">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500 text-white shadow-xs">
-              <KeyRound className="h-5 w-5" />
+        <div className="flex items-center justify-between border-b border-slate-200 px-4 sm:px-6 py-3.5 sm:py-4 bg-slate-50/80 shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl sm:rounded-2xl bg-emerald-500 text-white shadow-xs shrink-0">
+              <KeyRound className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-slate-900 font-['Space_Grotesk']">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 font-['Space_Grotesk'] leading-tight">
                 {t.activeAccess.title}
               </h3>
-              <p className="text-xs text-slate-500 font-medium">
+              <p className="text-[11px] sm:text-xs text-slate-500 font-medium">
                 {lang === 'uk'
                   ? 'Керування оплаченими ліцензіями та ключами доступу ТОВ «Рекрієйт»'
                   : 'Manage paid licenses and access keys of LLC «Recreate»'}
@@ -84,14 +84,14 @@ export const MyAccessModal: React.FC<MyAccessModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors"
+            className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-4 overflow-y-auto flex-grow bg-slate-50/50">
+        <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-grow bg-slate-50/50">
           {activeLicenses.length === 0 ? (
             <div className="text-center py-10 space-y-3">
               <KeyRound className="h-12 w-12 text-slate-400 mx-auto" />
