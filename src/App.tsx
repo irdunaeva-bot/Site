@@ -158,7 +158,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen w-full max-w-full overflow-x-hidden flex flex-col bg-slate-50 text-slate-800 font-['Plus_Jakarta_Sans',sans-serif]">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden flex flex-col bg-[#fefdf9] text-[#133458] font-['Plus_Jakarta_Sans',sans-serif]">
       {/* Active License notification banner */}
       <ActiveAccessBanner
         licenses={activeLicenses}

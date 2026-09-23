@@ -1,5 +1,20 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand-navy: #133458;
+  --color-brand-navy-dark: #0c223a;
+  --color-brand-navy-light: #1b497c;
+  --color-brand-olive: #838921;
+  --color-brand-olive-dark: #616616;
+  --color-brand-olive-light: #9ea52a;
+  --color-brand-gold: #D99B21;
+  --color-brand-gold-dark: #b88219;
+  --color-brand-gold-light: #e5ad3a;
+  --color-brand-cream: #FAF7BB;
+  --color-brand-cream-light: #fefdf2;
+  --color-brand-cream-dark: #f2eca0;
+}
+
 @layer base {
   html,
   body {
@@ -9,6 +24,8 @@
     margin: 0;
     padding: 0;
     -webkit-text-size-adjust: 100%;
+    background-color: #fdfdf8;
+    color: #133458;
   }
 
   *,
@@ -17,3 +34,4 @@
     box-sizing: border-box;
   }
 }
+
