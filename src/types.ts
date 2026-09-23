@@ -65,7 +65,13 @@ export interface Product {
   techStack: string[];
   hourlyPriceUah: number;
   monthlyPriceUah: number;
-  mockPreviewType: 'documind' | 'visioncraft' | 'datasynth';
+  mockPreviewType:
+    | 'child-centr'
+    | 'vytraty'
+    | 'chastka-realty'
+    | 'documind'
+    | 'visioncraft'
+    | 'datasynth';
 }
 
 export type PlanType = 'hourly' | 'monthly' | 'bundle_hourly' | 'bundle_monthly';

@@ -102,8 +102,8 @@ export const LegalModal: React.FC<LegalModalProps> = ({
               </h5>
               <p>
                 {lang === 'uk'
-                  ? '1.1. Виконавець (ТОВ «Рекрієйт») надає Замовнику послуги з надання тимчасового доступу до функціональних можливостей програмного забезпечення (DocuMind AI, VisionCraft Studio, DataSynth Bot) на основі обраного тарифного плану: погодинного (Hourly) або помісячного (Monthly).'
-                  : '1.1. The Provider (LLC «Recreate») grants the Customer digital access to the functional capabilities of proprietary software (DocuMind AI, VisionCraft Studio, DataSynth Bot) based on the chosen pricing plan: Hourly or Monthly.'}
+                  ? '1.1. Виконавець (ТОВ «Рекрієйт») надає Замовнику послуги з надання тимчасового доступу до функціональних можливостей програмного забезпечення (Інформатизація дитячих закладів соціальної реабілітації, Система моніторингу активів та витрат, Платформа дробового інвестування в нерухомість) на основі обраного тарифного плану: погодинного (Hourly) або помісячного (Monthly).'
+                  : '1.1. The Provider (LLC «Recreate») grants the Customer digital access to the functional capabilities of proprietary software (Children\'s Social Rehabilitation Center System, Asset & Expense Monitoring System, Fractional Real Estate Investment Platform) based on the chosen pricing plan: Hourly or Monthly.'}
               </p>
               <p>
                 {lang === 'uk'

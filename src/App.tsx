@@ -33,9 +33,12 @@ export default function App() {
   // Products State with localStorage persistence for custom repos / demos
   const [products, setProducts] = useState<Product[]>(() => {
     try {
-      const saved = localStorage.getItem('recreate_products_custom');
+      const saved = localStorage.getItem('recreate_products_v2');
       if (saved) {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.some((p: Product) => p.id === 'child-centr' || p.id === 'vytraty' || p.id === 'chastka-realty')) {
+          return parsed;
+        }
       }
     } catch (e) {
       console.error('Failed to load custom products from localStorage', e);
@@ -89,11 +92,12 @@ export default function App() {
   // Persist custom products
   const handleSaveProducts = (updatedProducts: Product[]) => {
     setProducts(updatedProducts);
-    localStorage.setItem('recreate_products_custom', JSON.stringify(updatedProducts));
+    localStorage.setItem('recreate_products_v2', JSON.stringify(updatedProducts));
   };
 
   const handleResetDefaults = () => {
     setProducts(initialProducts);
+    localStorage.removeItem('recreate_products_v2');
     localStorage.removeItem('recreate_products_custom');
   };
 

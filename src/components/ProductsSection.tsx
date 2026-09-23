@@ -192,28 +192,54 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({
                   )}
                 </div>
 
-                {/* Direct Action Links (Demo + GitHub) */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 mb-5">
-                  {/* Demo Button */}
-                  <button
-                    onClick={() => onOpenDemo(product, currentVersionObj)}
-                    className={`flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r ${theme.buttonGradient} py-2.5 sm:py-3 px-3 text-xs font-bold text-white shadow-md transition-all w-full min-w-0`}
-                  >
-                    <Play className="h-3.5 w-3.5 fill-current shrink-0" />
-                    <span className="truncate">{t.products.viewDemo}</span>
-                  </button>
-
-                  {/* GitHub Repo Button */}
+                {/* Direct Software Link Display */}
+                <div className="mb-4 rounded-xl bg-slate-50 border border-slate-200/80 p-2.5 flex items-center justify-between gap-2 text-xs">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0"></span>
+                    <span className="text-slate-500 font-medium shrink-0">
+                      {lang === 'uk' ? 'Посилання:' : 'Link:'}
+                    </span>
+                    <a
+                      href={product.demoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono font-bold text-blue-600 hover:text-blue-800 hover:underline truncate"
+                      title={product.demoUrl}
+                    >
+                      {product.demoUrl}
+                    </a>
+                  </div>
                   <a
-                    href={product.githubUrl}
+                    href={product.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white py-2.5 sm:py-3 px-3 text-xs font-bold text-slate-700 hover:border-slate-300 hover:text-blue-600 shadow-xs transition-colors w-full min-w-0"
+                    className="shrink-0 text-blue-600 hover:text-blue-800 flex items-center gap-0.5 font-bold"
                   >
-                    <Github className="h-3.5 w-3.5 shrink-0" />
-                    <span>GitHub</span>
-                    <ExternalLink className="h-3 w-3 text-slate-400 shrink-0" />
+                    <ExternalLink className="h-3.5 w-3.5" />
                   </a>
+                </div>
+
+                {/* Direct Action Links (Open Live + Simulator + GitHub) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5 mb-5">
+                  {/* Direct Launch Button */}
+                  <a
+                    href={product.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r ${theme.buttonGradient} py-2.5 px-3 text-xs font-bold text-white shadow-md hover:shadow-lg transition-all w-full min-w-0`}
+                  >
+                    <span>{lang === 'uk' ? 'Відкрити онлайн ПЗ' : 'Launch Online App'}</span>
+                    <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                  </a>
+
+                  {/* Simulator / Demo Button */}
+                  <button
+                    onClick={() => onOpenDemo(product, currentVersionObj)}
+                    className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white py-2.5 px-3 text-xs font-bold text-slate-700 hover:border-slate-300 hover:text-blue-600 shadow-xs transition-colors w-full min-w-0"
+                  >
+                    <Play className="h-3.5 w-3.5 fill-current text-blue-600 shrink-0" />
+                    <span className="truncate">{lang === 'uk' ? 'Демо-огляд' : 'Demo Overview'}</span>
+                  </button>
                 </div>
 
                 {/* Key Features */}
@@ -236,6 +262,20 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({
 
                 {/* Pricing & Checkout CTA */}
                 <div className="mt-auto border-t border-slate-100 pt-4">
+                  <div className="flex items-center justify-between text-[11px] text-slate-500 mb-2.5">
+                    <span className="font-medium text-slate-400">{lang === 'uk' ? 'Репозиторій коду:' : 'Source Repository:'}</span>
+                    <a
+                      href={product.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 font-bold text-slate-600 hover:text-blue-600 transition-colors"
+                    >
+                      <Github className="h-3.5 w-3.5" />
+                      <span>GitHub</span>
+                      <ExternalLink className="h-2.5 w-2.5 text-slate-400" />
+                    </a>
+                  </div>
+
                   <div className="flex items-baseline justify-between mb-3">
                     <div>
                       <span className="text-xs font-medium text-slate-500">{t.products.hourlyFrom}</span>

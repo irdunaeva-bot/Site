@@ -290,15 +290,15 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                   <div className="space-y-2 text-xs text-slate-700 mb-5 flex-grow font-medium">
                     <div className="flex items-start gap-2">
                       <CheckCircle2 className="h-4 w-4 text-blue-600 shrink-0 mt-0.5" />
-                      <span><strong>DocuMind AI</strong> ({lang === 'uk' ? 'OCR та аналітика' : 'OCR & analytics'})</span>
+                      <span><strong>{lang === 'uk' ? 'Заклади соц. реабілітації' : 'Child Rehab Centers'}</strong> ({lang === 'uk' ? 'Модулі 4.1-4.10, медблок 079/о' : 'Modules 4.1-4.10, 079/o'})</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle2 className="h-4 w-4 text-blue-600 shrink-0 mt-0.5" />
-                      <span><strong>VisionCraft Studio</strong> ({lang === 'uk' ? 'Медіа 4K' : '4K media'})</span>
+                      <span><strong>{lang === 'uk' ? 'Моніторинг активів & витрат' : 'Asset & Expense Monitor'}</strong> ({lang === 'uk' ? 'ФОП 3 група 5%, Net Worth, чеки' : 'FOP 5% tax, Net Worth'})</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle2 className="h-4 w-4 text-blue-600 shrink-0 mt-0.5" />
-                      <span><strong>DataSynth Bot</strong> ({lang === 'uk' ? 'SQL & BI аналітика' : 'SQL & BI analytics'})</span>
+                      <span><strong>{lang === 'uk' ? 'Дробове інвестування' : 'Fractional Real Estate'}</strong> ({lang === 'uk' ? 'Частки від $50, ERC-3643, дивіденди' : 'Shares from $50, ERC-3643'})</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle2 className="h-4 w-4 text-blue-600 shrink-0 mt-0.5" />

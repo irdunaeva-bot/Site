@@ -18,6 +18,15 @@ import {
   Clock,
   CreditCard,
   ShieldCheck,
+  Building2,
+  Users,
+  HeartPulse,
+  DollarSign,
+  TrendingUp,
+  Receipt,
+  FileSpreadsheet,
+  Layers,
+  ArrowRight,
 } from 'lucide-react';
 
 interface InteractiveDemoModalProps {
@@ -45,27 +54,18 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
   // Copied state
   const [copied, setCopied] = useState(false);
 
-  // DocuMind simulation state
-  const [docType, setDocType] = useState<'contract' | 'invoice' | 'act'>('contract');
-  const [analyzing, setAnalyzing] = useState(false);
-  const [analysisDone, setAnalysisDone] = useState(true);
+  // Child-centr simulation state
+  const [childTab, setChildTab] = useState<'dossier' | 'medical' | 'reports'>('dossier');
+  const [selectedPupil, setSelectedPupil] = useState<'p1' | 'p2' | 'p3'>('p1');
 
-  // VisionCraft simulation state
-  const [promptText, setPromptText] = useState(
-    lang === 'uk'
-      ? 'Професійний рендер українського брендового продукту на гранітному фоні з м’яким студійним світлом'
-      : 'Professional high-end product render on granite surface with soft studio lighting'
-  );
-  const [stylePreset, setStylePreset] = useState<'studio' | 'ecommerce' | 'cyberpunk'>('studio');
-  const [generatingImg, setGeneratingImg] = useState(false);
+  // Vytraty simulation state
+  const [vytratyTab, setVytratyTab] = useState<'assets' | 'ledger' | 'taxes'>('taxes');
+  const [quarterRevenue, setQuarterRevenue] = useState<number>(385000);
 
-  // DataSynth simulation state
-  const [queryText, setQueryText] = useState(
-    lang === 'uk'
-      ? 'Порівняння динаміки виручки за Q2 та Q3 2026'
-      : 'Revenue dynamics comparison between Q2 and Q3 2026'
-  );
-  const [executingSql, setExecutingSql] = useState(false);
+  // Chastka Realty simulation state
+  const [realtyTab, setRealtyTab] = useState<'marketplace' | 'calculator' | 'dividends'>('calculator');
+  const [investAmountUsd, setInvestAmountUsd] = useState<number>(500);
+  const [selectedObject, setSelectedObject] = useState<'hotel' | 'warehouse' | 'retail'>('hotel');
 
   const activeVersionObj =
     product.versions.find((v) => v.version === selectedVer) || product.versions[0];
@@ -74,29 +74,6 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
-  };
-
-  const runDocuMindAnalysis = () => {
-    setAnalyzing(true);
-    setAnalysisDone(false);
-    setTimeout(() => {
-      setAnalyzing(false);
-      setAnalysisDone(true);
-    }, 900);
-  };
-
-  const runVisionCraftGen = () => {
-    setGeneratingImg(true);
-    setTimeout(() => {
-      setGeneratingImg(false);
-    }, 1100);
-  };
-
-  const runDataSynthQuery = () => {
-    setExecutingSql(true);
-    setTimeout(() => {
-      setExecutingSql(false);
-    }, 850);
   };
 
   return (
@@ -142,9 +119,9 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
               href={product.demoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:flex items-center gap-1.5 rounded-xl border border-blue-200 bg-blue-50 px-2.5 sm:px-3 py-1.5 text-xs font-bold text-blue-700 hover:bg-blue-100 transition-colors"
+              className="flex items-center gap-1.5 rounded-xl border border-blue-300 bg-blue-50 px-2.5 sm:px-3 py-1.5 text-xs font-bold text-blue-700 hover:bg-blue-100 transition-colors shadow-xs"
             >
-              <span>{t.demoModal.openInNewTab}</span>
+              <span>{lang === 'uk' ? 'Перейти до ПЗ' : 'Launch App'}</span>
               <ExternalLink className="h-3.5 w-3.5" />
             </a>
 
@@ -188,190 +165,229 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
           </div>
         </div>
 
+        {/* Direct Link Banner */}
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 px-4 sm:px-6 py-2.5 text-white flex flex-wrap items-center justify-between gap-2 text-xs">
+          <div className="flex items-center gap-2">
+            <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span className="font-semibold">
+              {lang === 'uk' ? 'Офіційне онлайн посилання на ПЗ:' : 'Official live software link:'}
+            </span>
+            <a
+              href={product.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono underline font-bold bg-white/20 px-2 py-0.5 rounded hover:bg-white/30 transition-colors"
+            >
+              {product.demoUrl}
+            </a>
+          </div>
+          <a
+            href={product.demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 bg-white text-blue-700 font-bold px-3 py-1 rounded-lg hover:bg-blue-50 transition-colors shadow-xs"
+          >
+            <span>{lang === 'uk' ? 'Відкрити у повному вікні' : 'Open in Full Window'}</span>
+            <ExternalLink className="h-3 w-3" />
+          </a>
+        </div>
+
         {/* Modal Body: Interactive Functional Simulator */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-grow bg-slate-50/60">
-          {/* DocuMind AI Sandbox */}
-          {product.mockPreviewType === 'documind' && (
+        <div className="p-4 sm:p-6 overflow-y-auto space-y-6 flex-grow bg-slate-50/60">
+          
+          {/* SIMULATOR 1: child-centr */}
+          {product.mockPreviewType === 'child-centr' && (
             <div className="space-y-4">
-              <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-                <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-xs">
+                {/* Tabs */}
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-4 border-b border-slate-100 pb-3">
                   <div className="flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-blue-600" />
+                    <Users className="h-4 w-4 text-blue-600" />
                     <span className="text-sm font-bold text-slate-900">
-                      {lang === 'uk' ? 'Вибір зразка документа для аналізу:' : 'Select sample document to analyze:'}
+                      {lang === 'uk' ? 'Модулі системи автоматизації:' : 'Automation System Modules:'}
                     </span>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     <button
-                      onClick={() => {
-                        setDocType('contract');
-                        runDocuMindAnalysis();
-                      }}
+                      onClick={() => setChildTab('dossier')}
                       className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                        docType === 'contract'
+                        childTab === 'dossier'
                           ? 'bg-blue-600 text-white shadow-2xs'
                           : 'bg-slate-100 text-slate-600 hover:text-slate-900'
                       }`}
                     >
-                      {lang === 'uk' ? 'Договір поставки (PDF)' : 'Supply Contract (PDF)'}
+                      {lang === 'uk' ? 'Особові справи & ІПР (4.1)' : 'Pupil Dossier & IPR (4.1)'}
                     </button>
                     <button
-                      onClick={() => {
-                        setDocType('invoice');
-                        runDocuMindAnalysis();
-                      }}
+                      onClick={() => setChildTab('medical')}
                       className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                        docType === 'invoice'
+                        childTab === 'medical'
                           ? 'bg-blue-600 text-white shadow-2xs'
                           : 'bg-slate-100 text-slate-600 hover:text-slate-900'
                       }`}
                     >
-                      {lang === 'uk' ? 'Рахунок-фактура (Скан)' : 'Commercial Invoice (Scan)'}
+                      {lang === 'uk' ? 'Медичний блок 079/о (4.4)' : 'Medical Block 079/o (4.4)'}
                     </button>
                     <button
-                      onClick={() => {
-                        setDocType('act');
-                        runDocuMindAnalysis();
-                      }}
+                      onClick={() => setChildTab('reports')}
                       className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                        docType === 'act'
+                        childTab === 'reports'
                           ? 'bg-blue-600 text-white shadow-2xs'
                           : 'bg-slate-100 text-slate-600 hover:text-slate-900'
                       }`}
                     >
-                      {lang === 'uk' ? 'Акт виконаних робіт' : 'Acceptance Act'}
+                      {lang === 'uk' ? 'Звітність Мінсоц & ССД (4.7)' : 'SSD & Ministry Reports (4.7)'}
                     </button>
                   </div>
                 </div>
 
-                {analyzing ? (
-                  <div className="py-12 text-center space-y-3">
-                    <RefreshCw className="h-8 w-8 text-blue-600 animate-spin mx-auto" />
-                    <p className="text-sm text-blue-700 font-bold">
-                      {lang === 'uk'
-                        ? 'Нейромережевий рушій Recreate OCR Core аналізує документ...'
-                        : 'Recreate OCR Core neural engine is parsing document...'}
-                    </p>
-                    <p className="text-xs text-slate-500">
-                      {lang === 'uk'
-                        ? 'Розпізнавання таблиць, тексту та верифікація реквізитів ЄДРПОУ (ТОВ «Рекрієйт»)'
-                        : 'Table extraction, key-value parsing and USREOU verification (LLC «Recreate»)'}
-                    </p>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Left: Extracted Structured Fields */}
-                    <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold uppercase tracking-wider text-slate-600">
-                          {lang === 'uk' ? 'Розпізнані сутності (Structured OCR)' : 'Extracted Entities (Structured OCR)'}
-                        </span>
-                        <span className="text-[11px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-200 px-2.5 py-0.5 rounded-full">
-                          {lang === 'uk' ? 'Точність: 99.8%' : 'Accuracy: 99.8%'}
-                        </span>
-                      </div>
-
-                      <div className="space-y-2 text-xs">
-                        <div className="flex justify-between border-b border-slate-200 pb-1.5">
-                          <span className="text-slate-500 font-medium">
-                            {lang === 'uk' ? 'Тип документа:' : 'Document Type:'}
-                          </span>
-                          <span className="font-bold text-slate-800">
-                            {docType === 'contract'
-                              ? (lang === 'uk' ? 'Договір купівлі-продажу обладнання' : 'Equipment Purchase Agreement')
-                              : docType === 'invoice'
-                              ? (lang === 'uk' ? 'Рахунок на оплату №SF-8902' : 'Payment Invoice #SF-8902')
-                              : (lang === 'uk' ? 'Акт наданих послуг №104' : 'Services Acceptance Act #104')}
-                          </span>
-                        </div>
-                        <div className="flex justify-between border-b border-slate-200 pb-1.5">
-                          <span className="text-slate-500 font-medium">
-                            {lang === 'uk' ? 'Сторона 1 (Постачальник):' : 'Party 1 (Supplier):'}
-                          </span>
-                          <span className="font-bold text-slate-800">
-                            {lang === 'uk' ? 'ТОВ «Рекрієйт» (ЄДРПОУ 44829103)' : 'LLC «Recreate» (USREOU 44829103)'}
-                          </span>
-                        </div>
-                        <div className="flex justify-between border-b border-slate-200 pb-1.5">
-                          <span className="text-slate-500 font-medium">
-                            {lang === 'uk' ? 'Сума зобов’язань:' : 'Contract Amount:'}
-                          </span>
-                          <span className="font-bold text-blue-600">
-                            {lang === 'uk' ? '148,500.00 UAH (з ПДВ 20%)' : '148,500.00 UAH (20% VAT incl.)'}
-                          </span>
-                        </div>
-                        <div className="flex justify-between border-b border-slate-200 pb-1.5">
-                          <span className="text-slate-500 font-medium">
-                            {lang === 'uk' ? 'Строк оплати:' : 'Payment Term:'}
-                          </span>
-                          <span className="font-bold text-slate-800">
-                            {lang === 'uk' ? '5 банківських днів' : '5 banking days'}
-                          </span>
-                        </div>
-                        <div className="flex justify-between border-b border-slate-200 pb-1.5">
-                          <span className="text-slate-500 font-medium">
-                            {lang === 'uk' ? 'Юридичні ризики:' : 'Identified Risks:'}
-                          </span>
-                          <span className="font-bold text-amber-700">
-                            {lang === 'uk'
-                              ? 'Пункт 8.3: Пеня 0.5% за день (перевищує подвійну ставку НБУ)'
-                              : 'Clause 8.3: Daily penalty 0.5% exceeds benchmark'}
-                          </span>
-                        </div>
+                {/* Pupil Selector */}
+                {childTab === 'dossier' && (
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold text-slate-500">
+                        {lang === 'uk' ? 'Оберіть вихованця:' : 'Select pupil:'}
+                      </span>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => setSelectedPupil('p1')}
+                          className={`px-2.5 py-1 rounded-lg text-xs font-bold ${
+                            selectedPupil === 'p1' ? 'bg-blue-100 text-blue-800 border border-blue-200' : 'bg-slate-100 text-slate-600'
+                          }`}
+                        >
+                          Коваленко Максим (12 р.)
+                        </button>
+                        <button
+                          onClick={() => setSelectedPupil('p2')}
+                          className={`px-2.5 py-1 rounded-lg text-xs font-bold ${
+                            selectedPupil === 'p2' ? 'bg-blue-100 text-blue-800 border border-blue-200' : 'bg-slate-100 text-slate-600'
+                          }`}
+                        >
+                          Мельник Софія (9 р.)
+                        </button>
+                        <button
+                          onClick={() => setSelectedPupil('p3')}
+                          className={`px-2.5 py-1 rounded-lg text-xs font-bold ${
+                            selectedPupil === 'p3' ? 'bg-blue-100 text-blue-800 border border-blue-200' : 'bg-slate-100 text-slate-600'
+                          }`}
+                        >
+                          Шевченко Богдан (15 р.)
+                        </button>
                       </div>
                     </div>
 
-                    {/* Right: JSON Schema Output */}
-                    <div className="rounded-2xl border border-slate-200 bg-slate-900 p-4 relative text-white">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-                          <Terminal className="h-3.5 w-3.5 text-blue-400" />
-                          JSON Response Schema
-                        </span>
-                        <button
-                          onClick={() =>
-                            handleCopyJson(
-                              JSON.stringify(
-                                {
-                                  document_type: docType,
-                                  version: selectedVer,
-                                  developer: 'ТОВ Рекрієйт',
-                                  edrpou: '44829103',
-                                  amount_uah: 148500.0,
-                                  vat_included: true,
-                                  status: 'verified',
-                                },
-                                null,
-                                2
-                              )
-                            )
-                          }
-                          className="flex items-center gap-1 text-[11px] text-slate-300 hover:text-white"
-                        >
-                          {copied ? <Check className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3" />}
-                          {copied ? t.checkoutModal.copied : t.checkoutModal.copyKey}
-                        </button>
+                    {/* Dossier Card */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 space-y-3 text-xs">
+                        <div className="flex justify-between items-center border-b border-slate-200 pb-2">
+                          <span className="font-bold text-slate-900">
+                            {selectedPupil === 'p1' ? 'Коваленко Максим Олександрович' : selectedPupil === 'p2' ? 'Мельник Софія Сергіївна' : 'Шевченко Богдан Ігорович'}
+                          </span>
+                          <span className="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full text-[10px]">
+                            {lang === 'uk' ? 'Активний статус' : 'Active Status'}
+                          </span>
+                        </div>
+                        <div className="space-y-1.5 text-slate-600">
+                          <div className="flex justify-between">
+                            <span className="text-slate-500">{lang === 'uk' ? 'Підстава прийому:' : 'Admission Grounds:'}</span>
+                            <span className="font-semibold text-slate-800">Рішення ССД № 142/26</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-slate-500">{lang === 'uk' ? 'ІПР план:' : 'IPR Roadmap:'}</span>
+                            <span className="font-bold text-blue-600">4 з 5 етапів пройдено (80%)</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-slate-500">{lang === 'uk' ? 'Освітня база (ЄДЕБО):' : 'EDEBO synced:'}</span>
+                            <span className="font-semibold text-slate-800">Ліцей № 24, 7-Б клас</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-slate-500">{lang === 'uk' ? 'Закріплений ФОП-фахівець:' : 'Contract Specialist:'}</span>
+                            <span className="font-semibold text-slate-800">Психолог Грищенко О.В. (ФОП)</span>
+                          </div>
+                        </div>
                       </div>
 
-                      <pre className="text-[11px] font-mono text-emerald-400 bg-slate-950 p-3 rounded-xl overflow-x-auto max-h-48 leading-relaxed border border-slate-800">
+                      {/* Audit Log Box */}
+                      <div className="rounded-2xl border border-slate-200 bg-slate-900 p-4 text-white relative">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+                            <Terminal className="h-3.5 w-3.5 text-blue-400" />
+                            WORM Cryptographic Audit Log
+                          </span>
+                          <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-md font-mono">
+                            VERIFIED
+                          </span>
+                        </div>
+                        <pre className="text-[11px] font-mono text-emerald-400 bg-slate-950 p-3 rounded-xl overflow-x-auto max-h-40 leading-relaxed border border-slate-800">
 {`{
-  "document_type": "${docType}",
-  "engine": "Recreate-Neural-OCR-v2.2",
-  "developer": "ТОВ «Рекрієйт» (ЄДРПОУ 44829103)",
-  "version": "${selectedVer}",
-  "parties": {
-    "supplier": "ТОВ «Рекрієйт»",
-    "edrpou": "44829103",
-    "buyer": "АТ «УкрТрансЛогістик»"
-  },
-  "financials": {
-    "total_uah": 148500.00,
-    "currency": "UAH",
-    "vat_rate": 0.20
-  },
-  "validation_status": "PASSED"
+  "record_id": "REHAB-2026-${selectedPupil.toUpperCase()}",
+  "module": "4.1 Dossier & 4.2 IPR",
+  "audit_standard": "WORM-Immutable-Log",
+  "hash": "e93f81c9a41b2e8870198fba01",
+  "timestamp": "2026-09-23T11:42:15Z",
+  "actor": "ТОВ «Рекрієйт» (ЄДРПОУ 44829103)",
+  "compliance": "Закон України «Про захист персональних даних»"
 }`}
-                      </pre>
+                        </pre>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Medical View */}
+                {childTab === 'medical' && (
+                  <div className="rounded-2xl border border-blue-100 bg-blue-50/50 p-4 space-y-3 text-xs">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <HeartPulse className="h-4 w-4 text-rose-600" />
+                        <span className="font-bold text-slate-900">
+                          {lang === 'uk' ? 'Медичний блок: Довідка форми 079/о та огляди' : 'Medical Block: Form 079/o and Examinations'}
+                        </span>
+                      </div>
+                      <span className="text-blue-700 font-bold bg-white px-2.5 py-0.5 rounded-full border border-blue-200">
+                        {lang === 'uk' ? 'Модуль 4.4 Захищено' : 'Module 4.4 Protected'}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                      <div className="bg-white p-3 rounded-xl border border-slate-200">
+                        <span className="text-slate-500 font-medium">{lang === 'uk' ? 'Вакцинація за віком:' : 'Vaccinations:'}</span>
+                        <p className="font-bold text-emerald-600 mt-1">100% Завершено</p>
+                      </div>
+                      <div className="bg-white p-3 rounded-xl border border-slate-200">
+                        <span className="text-slate-500 font-medium">{lang === 'uk' ? 'Дієтичний стіл:' : 'Dietary Plan:'}</span>
+                        <p className="font-bold text-slate-800 mt-1">Стіл № 5 (Гіпоалергенний)</p>
+                      </div>
+                      <div className="bg-white p-3 rounded-xl border border-slate-200">
+                        <span className="text-slate-500 font-medium">{lang === 'uk' ? 'Плановий огляд педіатра:' : 'Next Checkup:'}</span>
+                        <p className="font-bold text-blue-600 mt-1">26.09.2026 (ОКЛ Київ)</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Reports View */}
+                {childTab === 'reports' && (
+                  <div className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3 text-xs">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <FileSpreadsheet className="h-4 w-4 text-emerald-600" />
+                        <span className="font-bold text-slate-900">
+                          {lang === 'uk' ? 'Регламентована державна звітність (Модуль 4.7)' : 'Statutory State Reports (Module 4.7)'}
+                        </span>
+                      </div>
+                      <span className="text-xs text-slate-500">
+                        {lang === 'uk' ? 'Стандарти Мінсоцполітики 2026' : '2026 Standards'}
+                      </span>
+                    </div>
+                    <div className="space-y-2 pt-2">
+                      <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                        <span className="font-semibold text-slate-800">Форма 1-ССД: Звіт про рух вихованців за поточний місяць</span>
+                        <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Згенеровано (PDF/Excel)</span>
+                      </div>
+                      <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                        <span className="font-semibold text-slate-800">Відомість надання психолого-педагогічних послуг ФОП</span>
+                        <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Готово до підписання КЕП</span>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -379,194 +395,329 @@ export const InteractiveDemoModal: React.FC<InteractiveDemoModalProps> = ({
             </div>
           )}
 
-          {/* VisionCraft Studio Sandbox */}
-          {product.mockPreviewType === 'visioncraft' && (
+          {/* SIMULATOR 2: vytraty */}
+          {product.mockPreviewType === 'vytraty' && (
             <div className="space-y-4">
-              <div className="rounded-2xl border border-slate-200 bg-white p-5 space-y-4 shadow-xs">
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <div className="flex-grow space-y-1.5">
-                    <label className="text-xs font-bold text-slate-700">
-                      {lang === 'uk' ? 'Промпт для генерації медіа:' : 'Media generation prompt:'}
-                    </label>
-                    <input
-                      type="text"
-                      value={promptText}
-                      onChange={(e) => setPromptText(e.target.value)}
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs text-slate-900 focus:border-blue-600 focus:bg-white focus:outline-hidden transition-colors"
-                    />
+              <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-xs">
+                {/* Tabs */}
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-4 border-b border-slate-100 pb-3">
+                  <div className="flex items-center gap-2">
+                    <TrendingUp className="h-4 w-4 text-blue-600" />
+                    <span className="text-sm font-bold text-slate-900">
+                      {lang === 'uk' ? 'Модулі моніторингу активів та податків:' : 'Asset & Tax Monitoring Modules:'}
+                    </span>
                   </div>
-                  <div className="w-full sm:w-48 space-y-1.5">
-                    <label className="text-xs font-bold text-slate-700">
-                      {lang === 'uk' ? 'Стиль брендбуку:' : 'Brand visual style:'}
-                    </label>
-                    <select
-                      value={stylePreset}
-                      onChange={(e: any) => setStylePreset(e.target.value)}
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-blue-600 focus:bg-white focus:outline-hidden transition-colors"
-                    >
-                      <option value="studio">{lang === 'uk' ? 'Студійний E-commerce' : 'Studio E-commerce'}</option>
-                      <option value="ecommerce">{lang === 'uk' ? 'Каталог продукції' : 'Product Catalog'}</option>
-                      <option value="cyberpunk">{lang === 'uk' ? 'Футуристичний неоновий' : 'Futuristic Neon'}</option>
-                    </select>
-                  </div>
-                  <div className="sm:self-end">
+                  <div className="flex flex-wrap gap-2">
                     <button
-                      onClick={runVisionCraftGen}
-                      className="w-full sm:w-auto flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-xs font-bold text-white shadow-md shadow-blue-500/20 hover:from-blue-700 hover:to-indigo-700 transition-all"
+                      onClick={() => setVytratyTab('taxes')}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                        vytratyTab === 'taxes'
+                          ? 'bg-blue-600 text-white shadow-2xs'
+                          : 'bg-slate-100 text-slate-600 hover:text-slate-900'
+                      }`}
                     >
-                      <Sparkles className="h-3.5 w-3.5" />
-                      <span>{generatingImg ? (lang === 'uk' ? 'Генерація...' : 'Rendering...') : (lang === 'uk' ? 'Згенерувати' : 'Generate')}</span>
+                      {lang === 'uk' ? 'ФОП 3 група (5%) & Ліміт' : 'FOP 5% Tax & Cap'}
+                    </button>
+                    <button
+                      onClick={() => setVytratyTab('assets')}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                        vytratyTab === 'assets'
+                          ? 'bg-blue-600 text-white shadow-2xs'
+                          : 'bg-slate-100 text-slate-600 hover:text-slate-900'
+                      }`}
+                    >
+                      {lang === 'uk' ? 'Активи & Net Worth' : 'Assets & Net Worth'}
+                    </button>
+                    <button
+                      onClick={() => setVytratyTab('ledger')}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                        vytratyTab === 'ledger'
+                          ? 'bg-blue-600 text-white shadow-2xs'
+                          : 'bg-slate-100 text-slate-600 hover:text-slate-900'
+                      }`}
+                    >
+                      {lang === 'uk' ? 'Журнал витрат & Чеки' : 'Ledger & Receipts'}
                     </button>
                   </div>
                 </div>
 
-                {/* Preview Canvas */}
-                <div className="relative rounded-2xl border border-slate-200 bg-gradient-to-br from-blue-50 via-indigo-50/50 to-white p-6 flex flex-col items-center justify-center min-h-[220px] overflow-hidden">
-                  {generatingImg ? (
-                    <div className="text-center space-y-2">
-                      <RefreshCw className="h-8 w-8 text-blue-600 animate-spin mx-auto" />
-                      <p className="text-xs font-bold text-blue-700">
-                        {lang === 'uk'
-                          ? 'Авторський генеративний рушій Recreate Visual Core рендерить 4K...'
-                          : 'Proprietary Recreate Visual Core engine is rendering 4K...'}
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="w-full flex flex-col md:flex-row items-center justify-between gap-6">
-                      <div className="space-y-2 max-w-md">
-                        <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">
-                          {lang === 'uk' ? 'Результат генерації Recreate Visual Core' : 'Recreate Visual Core Render Output'}
-                        </span>
-                        <h4 className="text-sm font-bold text-slate-900">
-                          {lang === 'uk'
-                            ? 'Фоторамка рекламного банера з точним збереженням фірмових кольорів ТОВ «Рекрієйт»'
-                            : 'Ad banner frame maintaining strict color branding of LLC «Recreate»'}
-                        </h4>
-                        <p className="text-xs text-slate-600">
-                          {lang === 'uk'
-                            ? 'Роздільна здатність: 3840 × 2160 (Ultra-HD). AI Inpainting підтримує заміну фону та адаптацію під формат маркетплейсів Rozetka, Prom та Amazon.'
-                            : 'Resolution: 3840 × 2160 (Ultra-HD). AI Inpainting supports background swap and multi-marketplace aspect sizing.'}
+                {/* Tax Calculator Mode */}
+                {vytratyTab === 'taxes' && (
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <label className="text-xs font-bold text-slate-700">
+                          {lang === 'uk' ? 'Дохід ФОП 3 групи за квартал (грн):' : 'Quarterly FOP Revenue (UAH):'}
+                        </label>
+                        <input
+                          type="number"
+                          value={quarterRevenue}
+                          onChange={(e) => setQuarterRevenue(Number(e.target.value))}
+                          className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs font-bold text-slate-900 focus:border-blue-600 focus:bg-white focus:outline-hidden"
+                        />
+                        <p className="text-[11px] text-slate-500">
+                          {lang === 'uk' ? 'Річний ліміт доходу ФОП 3 групи: 8 280 000 ₴' : 'FOP 3 Group annual threshold: 8,280,000 UAH'}
                         </p>
                       </div>
 
-                      {/* Mock Graphic Element */}
-                      <div className="h-36 w-56 rounded-2xl border border-blue-200 bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-600 flex flex-col items-center justify-center text-center p-4 relative shadow-lg text-white">
-                        <ImageIcon className="h-8 w-8 text-blue-100 mb-2" />
-                        <span className="text-[11px] font-extrabold tracking-wide">
-                          VISIONCRAFT STUDIO
-                        </span>
-                        <span className="text-[9px] text-blue-100 font-medium">4K Render • Color Palette HEX #2563EB</span>
+                      {/* Calculations */}
+                      <div className="rounded-xl bg-slate-50 border border-slate-200 p-3.5 space-y-2 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-slate-600">{lang === 'uk' ? 'Єдиний податок (5%):' : 'Single Tax (5%):'}</span>
+                          <span className="font-extrabold text-blue-700">
+                            {Math.round(quarterRevenue * 0.05).toLocaleString('uk-UA')} ₴
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-600">{lang === 'uk' ? 'ЄСВ (22% за 3 міс):' : 'ESV (3 months):'}</span>
+                          <span className="font-bold text-slate-800">5 280 ₴</span>
+                        </div>
+                        <div className="flex justify-between border-t border-slate-200 pt-1.5 font-bold">
+                          <span>{lang === 'uk' ? 'Разом до сплати в ДПС:' : 'Total Payable to Tax Office:'}</span>
+                          <span className="text-emerald-700">
+                            {(Math.round(quarterRevenue * 0.05) + 5280).toLocaleString('uk-UA')} ₴
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  )}
-                </div>
+
+                    {/* Progress Bar: Annual Threshold */}
+                    <div className="rounded-xl border border-slate-200 p-3 bg-white space-y-1.5 text-xs">
+                      <div className="flex justify-between font-semibold text-slate-700">
+                        <span>{lang === 'uk' ? 'Моніторинг річного ліміту 8.28 млн грн:' : 'Annual UAH 8.28M Limit Progress:'}</span>
+                        <span className="font-bold text-blue-700">
+                          {((quarterRevenue * 3 / 8280000) * 100).toFixed(1)}% використано
+                        </span>
+                      </div>
+                      <div className="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
+                          style={{ width: `${Math.min(100, (quarterRevenue * 3 / 8280000) * 100)}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Assets & Net Worth */}
+                {vytratyTab === 'assets' && (
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+                      <span className="text-slate-500 font-medium">{lang === 'uk' ? 'Загальні активи (Fair Value):' : 'Total Assets (Fair Value):'}</span>
+                      <p className="text-lg font-bold text-slate-900 mt-1">2 850 000 ₴</p>
+                      <span className="text-[11px] text-emerald-600 font-semibold">+8.4% переоцінка</span>
+                    </div>
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+                      <span className="text-slate-500 font-medium">{lang === 'uk' ? 'Зобов’язання:' : 'Liabilities:'}</span>
+                      <p className="text-lg font-bold text-slate-900 mt-1">140 000 ₴</p>
+                      <span className="text-[11px] text-slate-500">Поточні рахунки</span>
+                    </div>
+                    <div className="bg-blue-50 border border-blue-200 rounded-xl p-3.5">
+                      <span className="text-blue-700 font-bold">{lang === 'uk' ? 'Чистий капітал (Net Worth):' : 'Net Worth:'}</span>
+                      <p className="text-lg font-extrabold text-blue-900 mt-1">2 710 000 ₴</p>
+                      <span className="text-[11px] text-blue-700 font-semibold">Офіційний розрахунок</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Ledger & Receipts */}
+                {vytratyTab === 'ledger' && (
+                  <div className="space-y-2 text-xs">
+                    <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                      <div className="flex items-center gap-2">
+                        <Receipt className="h-4 w-4 text-blue-600" />
+                        <div>
+                          <p className="font-bold text-slate-800">Оренда офісного приміщення (вул. Жилянська)</p>
+                          <p className="text-[11px] text-slate-500">Чек № 849103 • ТОВ «Рекрієйт»</p>
+                        </div>
+                      </div>
+                      <span className="font-bold text-slate-900">-24 000.00 ₴</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                      <div className="flex items-center gap-2">
+                        <Receipt className="h-4 w-4 text-emerald-600" />
+                        <div>
+                          <p className="font-bold text-slate-800">Ліцензія на хмарні сервери та хостинг</p>
+                          <p className="text-[11px] text-slate-500">Прив’язано фіскальний інвойс PDF</p>
+                        </div>
+                      </div>
+                      <span className="font-bold text-slate-900">-6 450.00 ₴</span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
 
-          {/* DataSynth Bot Sandbox */}
-          {product.mockPreviewType === 'datasynth' && (
+          {/* SIMULATOR 3: chastka-realty */}
+          {product.mockPreviewType === 'chastka-realty' && (
             <div className="space-y-4">
-              <div className="rounded-2xl border border-slate-200 bg-white p-5 space-y-4 shadow-xs">
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <div className="flex-grow space-y-1.5">
-                    <label className="text-xs font-bold text-slate-700">
-                      {lang === 'uk' ? 'Запит природною мовою до бази даних:' : 'Natural language query to database:'}
-                    </label>
-                    <input
-                      type="text"
-                      value={queryText}
-                      onChange={(e) => setQueryText(e.target.value)}
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs text-slate-900 focus:border-blue-600 focus:bg-white focus:outline-hidden transition-colors"
-                    />
+              <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-xs">
+                {/* Tabs */}
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-4 border-b border-slate-100 pb-3">
+                  <div className="flex items-center gap-2">
+                    <Building2 className="h-4 w-4 text-blue-600" />
+                    <span className="text-sm font-bold text-slate-900">
+                      {lang === 'uk' ? 'Модулі інвестування в нерухомість:' : 'Real Estate Investment Modules:'}
+                    </span>
                   </div>
-                  <div className="sm:self-end">
+                  <div className="flex flex-wrap gap-2">
                     <button
-                      onClick={runDataSynthQuery}
-                      className="w-full sm:w-auto flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-xs font-bold text-white shadow-md shadow-blue-500/20 hover:from-blue-700 hover:to-indigo-700 transition-all"
+                      onClick={() => setRealtyTab('calculator')}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                        realtyTab === 'calculator'
+                          ? 'bg-blue-600 text-white shadow-2xs'
+                          : 'bg-slate-100 text-slate-600 hover:text-slate-900'
+                      }`}
                     >
-                      <BarChart3 className="h-3.5 w-3.5" />
-                      <span>{executingSql ? (lang === 'uk' ? 'Виконання...' : 'Executing...') : (lang === 'uk' ? 'Побудувати аналітику' : 'Synthesize Analytics')}</span>
+                      {lang === 'uk' ? 'Калькулятор ROI & Смарт-контракт' : 'ROI Calculator & ERC-3643'}
+                    </button>
+                    <button
+                      onClick={() => setRealtyTab('marketplace')}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                        realtyTab === 'marketplace'
+                          ? 'bg-blue-600 text-white shadow-2xs'
+                          : 'bg-slate-100 text-slate-600 hover:text-slate-900'
+                      }`}
+                    >
+                      {lang === 'uk' ? 'Маркетплейс часток (від $50)' : 'Marketplace (from $50)'}
+                    </button>
+                    <button
+                      onClick={() => setRealtyTab('dividends')}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                        realtyTab === 'dividends'
+                          ? 'bg-blue-600 text-white shadow-2xs'
+                          : 'bg-slate-100 text-slate-600 hover:text-slate-900'
+                      }`}
+                    >
+                      {lang === 'uk' ? 'Кабінет & Виплати на IBAN' : 'Cabinet & IBAN Payouts'}
                     </button>
                   </div>
                 </div>
 
-                {executingSql ? (
-                  <div className="py-12 text-center space-y-2">
-                    <RefreshCw className="h-8 w-8 text-blue-600 animate-spin mx-auto" />
-                    <p className="text-xs font-bold text-blue-700">
-                      {lang === 'uk'
-                        ? 'Recreate SQL Synthesizer генерує оптимізований SQL та розраховує бізнес-метрики...'
-                        : 'Recreate SQL Synthesizer is generating optimized SQL and business metrics...'}
-                    </p>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Generated SQL query */}
-                    <div className="rounded-2xl border border-slate-800 bg-slate-900 p-4 space-y-2 text-white">
-                      <div className="flex items-center justify-between text-xs text-slate-400">
-                        <span className="font-bold uppercase text-slate-200">
-                          {lang === 'uk' ? 'Згенерований SQL (PostgreSQL / ClickHouse)' : 'Generated SQL (PostgreSQL / ClickHouse)'}
-                        </span>
-                        <span className="text-[11px] font-bold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded">
-                          0.04s execution
-                        </span>
+                {/* Calculator Mode */}
+                {realtyTab === 'calculator' && (
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-3">
+                        <label className="text-xs font-bold text-slate-700">
+                          {lang === 'uk' ? 'Сума інвестиції в частки (USD):' : 'Investment in shares (USD):'}
+                        </label>
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="range"
+                            min="50"
+                            max="5000"
+                            step="50"
+                            value={investAmountUsd}
+                            onChange={(e) => setInvestAmountUsd(Number(e.target.value))}
+                            className="w-full accent-blue-600"
+                          />
+                          <span className="font-extrabold text-blue-700 font-mono text-sm w-20 text-right">
+                            ${investAmountUsd}
+                          </span>
+                        </div>
+
+                        {/* Preset buttons */}
+                        <div className="flex gap-1.5">
+                          {[50, 200, 500, 1500, 3000].map((amt) => (
+                            <button
+                              key={amt}
+                              onClick={() => setInvestAmountUsd(amt)}
+                              className={`px-2 py-1 rounded-lg text-xs font-bold ${
+                                investAmountUsd === amt
+                                  ? 'bg-blue-600 text-white'
+                                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                              }`}
+                            >
+                              ${amt}
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                      <pre className="text-[11px] font-mono text-cyan-300 bg-slate-950 p-3 rounded-xl overflow-x-auto leading-relaxed border border-slate-800">
-{`SELECT 
-  DATE_TRUNC('month', order_date) AS period,
-  SUM(revenue_uah) AS total_revenue,
-  AVG(order_margin) AS avg_margin_pct
-FROM enterprise_sales
-WHERE order_date >= '2026-04-01'
-GROUP BY 1
-ORDER BY period ASC;`}
-                      </pre>
+
+                      {/* Calculations Yield Display */}
+                      <div className="rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50/70 border border-blue-200 p-4 space-y-2 text-xs">
+                        <div className="flex justify-between items-center">
+                          <span className="text-slate-600 font-medium">{lang === 'uk' ? 'Прогнозована річна ставка:' : 'Projected Annual ROI:'}</span>
+                          <span className="font-extrabold text-emerald-600 text-sm">15.8% річних</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-slate-600 font-medium">{lang === 'uk' ? 'Щомісячний дивіденд на рахунок:' : 'Monthly Dividend Payout:'}</span>
+                          <span className="font-bold text-slate-900 text-sm">
+                            ${((investAmountUsd * 0.158) / 12).toFixed(2)} / міс (≈ {Math.round(((investAmountUsd * 0.158) / 12) * 41.5)} ₴)
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center border-t border-blue-200 pt-2 font-bold">
+                          <span className="text-blue-900">{lang === 'uk' ? 'Чистий прибуток за 3 роки:' : '3-Year Total Return:'}</span>
+                          <span className="text-blue-700 text-sm">
+                            +${(investAmountUsd * 0.158 * 3).toFixed(2)} USD
+                          </span>
+                        </div>
+                      </div>
                     </div>
 
-                    {/* Chart Mock / SVG metrics */}
-                    <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 space-y-3">
-                      <span className="text-xs font-bold uppercase text-slate-700">
-                        {lang === 'uk' ? 'Динаміка виручки (млн грн)' : 'Revenue Dynamics (M UAH)'}
-                      </span>
-                      <div className="space-y-2.5 pt-1 text-xs">
-                        <div>
-                          <div className="flex justify-between text-slate-600 font-medium mb-1">
-                            <span>{lang === 'uk' ? 'Квітень 2026 (Q2)' : 'April 2026 (Q2)'}</span>
-                            <span className="font-bold text-slate-900">4.2 {lang === 'uk' ? 'млн ₴' : 'M ₴'}</span>
-                          </div>
-                          <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
-                            <div className="h-full bg-blue-600 rounded-full" style={{ width: '65%' }}></div>
-                          </div>
-                        </div>
-                        <div>
-                          <div className="flex justify-between text-slate-600 font-medium mb-1">
-                            <span>{lang === 'uk' ? 'Травень 2026 (Q2)' : 'May 2026 (Q2)'}</span>
-                            <span className="font-bold text-slate-900">5.1 {lang === 'uk' ? 'млн ₴' : 'M ₴'}</span>
-                          </div>
-                          <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
-                            <div className="h-full bg-blue-600 rounded-full" style={{ width: '78%' }}></div>
-                          </div>
-                        </div>
-                        <div>
-                          <div className="flex justify-between text-slate-600 font-medium mb-1">
-                            <span>{lang === 'uk' ? 'Червень 2026 (Q2)' : 'June 2026 (Q2)'}</span>
-                            <span className="font-bold text-slate-900">5.8 {lang === 'uk' ? 'млн ₴' : 'M ₴'}</span>
-                          </div>
-                          <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
-                            <div className="h-full bg-indigo-600 rounded-full" style={{ width: '85%' }}></div>
-                          </div>
-                        </div>
-                        <div>
-                          <div className="flex justify-between text-slate-600 font-medium mb-1">
-                            <span>{lang === 'uk' ? 'Липень 2026 (Q3)' : 'July 2026 (Q3)'}</span>
-                            <span className="font-bold text-emerald-600">6.9 {lang === 'uk' ? 'млн ₴' : 'M ₴'} (+19%)</span>
-                          </div>
-                          <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
-                            <div className="h-full bg-emerald-500 rounded-full" style={{ width: '96%' }}></div>
-                          </div>
-                        </div>
+                    {/* Smart Contract ERC-3643 Badge */}
+                    <div className="rounded-xl border border-slate-200 bg-slate-900 p-3 text-white flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2">
+                        <ShieldCheck className="h-4 w-4 text-emerald-400 shrink-0" />
+                        <span>
+                          {lang === 'uk'
+                            ? 'Смарт-контракт ERC-3643: Право на виплату дивідендів захищено в блокчейні'
+                            : 'ERC-3643 Smart Contract: Dividend entitlement immutably secured on-chain'}
+                        </span>
                       </div>
+                      <span className="font-mono text-[10px] text-blue-300 bg-slate-800 px-2 py-0.5 rounded">
+                        STANDARDS-COMPLIANT
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Marketplace Mode */}
+                {realtyTab === 'marketplace' && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50 space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="font-bold text-slate-900">Apart-Hotel Premier (Буковель)</span>
+                        <span className="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full text-[10px]">16.5% ROI</span>
+                      </div>
+                      <p className="text-slate-600 text-[11px]">Готельний фонд класу Luxe, оператор Reikartz. Вхід від $50.</p>
+                      <div className="flex justify-between text-slate-500 font-medium">
+                        <span>Заповненість: 84%</span>
+                        <span className="text-blue-600 font-bold">Зібрано 92% пулу</span>
+                      </div>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50 space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="font-bold text-slate-900">Логістичний парк West Hub (Львів)</span>
+                        <span className="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full text-[10px]">15.2% ROI</span>
+                      </div>
+                      <p className="text-slate-600 text-[11px]">Складські площі класу А, довгострокова оренда Нова Пошта.</p>
+                      <div className="flex justify-between text-slate-500 font-medium">
+                        <span>Орендар: 100%</span>
+                        <span className="text-blue-600 font-bold">Зібрано 78% пулу</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Dividends Mode */}
+                {realtyTab === 'dividends' && (
+                  <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 space-y-3 text-xs">
+                    <div className="flex justify-between items-center border-b border-slate-200 pb-2">
+                      <span className="font-bold text-slate-900">
+                        {lang === 'uk' ? 'Автоматичні виплати дивідендів на рахунки IBAN' : 'Automated Dividend Disbursements to IBAN'}
+                      </span>
+                      <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                        Щомісяця 5 числа
+                      </span>
+                    </div>
+                    <div className="space-y-1.5 text-slate-600">
+                      <p>• {lang === 'uk' ? 'Прив’язка офіційного банківського IBAN для ТОВ та Фізичних осіб' : 'Direct IBAN settlement for LLC and private individuals'}</p>
+                      <p>• {lang === 'uk' ? 'Автоматичне утримання податку на доходи (ПДФО 18% + ВЗ 1.5%) при виплаті' : 'Automated statutory tax withholding upon withdrawal'}</p>
+                      <p>• {lang === 'uk' ? 'Експорт податкових виписок для декларацій' : 'One-click tax report generation for annual declaration'}</p>
                     </div>
                   </div>
                 )}
