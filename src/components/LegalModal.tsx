@@ -27,36 +27,36 @@ export const LegalModal: React.FC<LegalModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-sm">
       <div className="relative w-full max-w-3xl rounded-2xl sm:rounded-3xl border border-slate-200 bg-white shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-200 px-4 sm:px-6 py-3.5 sm:py-4 bg-slate-50/80 shrink-0">
+        <div className="flex items-center justify-between border-b border-[#133458]/10 px-4 sm:px-6 py-3.5 sm:py-4 bg-[#FAF7BB]/20 shrink-0">
           <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-xs shrink-0">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#133458] text-[#FAF7BB] shadow-xs shrink-0">
               <Shield className="h-5 w-5" />
             </div>
             <div className="min-w-0">
-              <h3 className="text-base font-bold text-slate-900 font-['Space_Grotesk'] truncate">
+              <h3 className="text-base font-bold text-[#133458] font-['Space_Grotesk'] truncate">
                 {t.legal.companyTitle}
               </h3>
-              <p className="text-[11px] sm:text-xs text-slate-500 font-medium truncate">
+              <p className="text-[11px] sm:text-xs text-[#133458]/60 font-medium truncate">
                 {lang === 'uk' ? company.legalNameUk : company.legalNameEn} • {lang === 'uk' ? 'ЄДРПОУ' : 'USREOU'} {company.edrpou}
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors shrink-0"
+            className="p-1.5 sm:p-2 rounded-xl text-[#133458]/50 hover:text-[#133458] hover:bg-[#FAF7BB]/40 transition-colors shrink-0"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-slate-200 bg-slate-50 px-3 sm:px-6 text-xs font-bold overflow-x-auto shrink-0">
+        <div className="flex border-b border-[#133458]/10 bg-[#FAF7BB]/10 px-3 sm:px-6 text-xs font-bold overflow-x-auto shrink-0">
           <button
             onClick={() => setActiveTab('offer')}
             className={`py-3 px-3 sm:px-4 border-b-2 whitespace-nowrap transition-colors ${
               activeTab === 'offer'
-                ? 'border-blue-600 text-blue-700'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
+                ? 'border-[#133458] text-[#133458]'
+                : 'border-transparent text-[#133458]/60 hover:text-[#133458]'
             }`}
           >
             {t.legal.tabOffer}
@@ -65,8 +65,8 @@ export const LegalModal: React.FC<LegalModalProps> = ({
             onClick={() => setActiveTab('privacy')}
             className={`py-3 px-3 sm:px-4 border-b-2 whitespace-nowrap transition-colors ${
               activeTab === 'privacy'
-                ? 'border-blue-600 text-blue-700'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
+                ? 'border-[#133458] text-[#133458]'
+                : 'border-transparent text-[#133458]/60 hover:text-[#133458]'
             }`}
           >
             {t.legal.tabPrivacy}
@@ -75,8 +75,8 @@ export const LegalModal: React.FC<LegalModalProps> = ({
             onClick={() => setActiveTab('refund')}
             className={`py-3 px-3 sm:px-4 border-b-2 whitespace-nowrap transition-colors ${
               activeTab === 'refund'
-                ? 'border-blue-600 text-blue-700'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
+                ? 'border-[#133458] text-[#133458]'
+                : 'border-transparent text-[#133458]/60 hover:text-[#133458]'
             }`}
           >
             {t.legal.tabRefund}
